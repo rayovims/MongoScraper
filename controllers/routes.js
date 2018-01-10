@@ -90,7 +90,7 @@ router.get("/api/scrape", function (req, res) {
                 image: image
             });
 
-            // db.Article.create(results[i]);
+            db.Article.create(results[i]);
         });
         res.json(results.length);
     });
