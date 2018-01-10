@@ -5,10 +5,20 @@ var exphbs = require("express-handlebars");
 var Handlebars = require("handlebars");
 const mongoose = require("mongoose");
 
-mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/newyorktimespost");
-// var template = Handlebars.compile(source);
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
+mongoose.connect("mongodb://heroku_bc0tfcjp:cr58svd7egj7qgk7310e0hk87l@ds249737.mlab.com:49737/heroku_bc0tfcjp", {
+    useMongoClient: true
+});
+var db = mongoose.connection;
+
+db.on("error", function (error) {
+    console.log("Mongoose Error: ", error);
+});
+
+db.once("open", function () {
+    console.log("Mongoose connection successful.");
+});
 
 var PORT = process.env.PORT || 3000;
 
