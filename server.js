@@ -3,10 +3,14 @@ var app = express();
 var bodyParser = require("body-parser");
 var exphbs = require("express-handlebars");
 var Handlebars = require("handlebars");
+const mongoose = require("mongoose");
+
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://localhost/newyorktimespost");
 // var template = Handlebars.compile(source);
 
 
-var PORT = process.env.PORT || 8000;
+var PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,7 +19,6 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 var routes = require("./controllers/routes.js");
-// Handlebars.registerPartial('noteModal', "saved")
 
 app.use("/", routes);
 

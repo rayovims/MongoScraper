@@ -6,8 +6,6 @@ const cheerio = require("cheerio");
 const db = require("../models");
 const mongoose = require("mongoose");
 
-mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/newyorktimespost");
 
 router.get("/", function (req, res) {
     db.Article
