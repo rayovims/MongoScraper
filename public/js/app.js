@@ -34,13 +34,38 @@ $(function () {
         $.ajax("/note/" + id, {
             type: "GET"
         }).done(function (response) {
-            console.log(response)
+            $("#notes").html("")
+            response.forEach(element => {
+                console.log(element.id)
+                $("#notes").append("<div>" + element.body + "<a noteid='" + element.id + "'class='btn right red' id='delete-note'>X</a>" + "</div><br>")
+            });
         })
     });
+    $(document).on("click", "#delete-note", function () {
+        const id = $(this).attr("noteid");
+       console.log(id)
+        $.ajax("/note/delete/" + id, {
+            type: "PUT"
+        }).done(function(response){
+           // location.reload();
+           console.log(response);
+        })
+    })
+
+    $(document).on("click", "#delete", function () {
+        const id = $("#note").attr("data-id");
+        $.ajax("/article/delete/" + id, {
+            type: 'PUT'
+        }).done(function (response) {
+            window.location.href = "/saved";
+            console.log("delete")
+        })
+    })
+
     $(document).on("click", "#saveNote", function () {
         const id = $(this).attr("data-id");
         const body = $("#newNote").val().trim();
-        console.log(id);
+        //console.log(id);
 
         const obj = {
             body: body

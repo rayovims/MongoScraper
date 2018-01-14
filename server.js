@@ -5,20 +5,26 @@ var exphbs = require("express-handlebars");
 var Handlebars = require("handlebars");
 const mongoose = require("mongoose");
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect("mongodb://heroku_bc0tfcjp:cr58svd7egj7qgk7310e0hk87l@ds249737.mlab.com:49737/heroku_bc0tfcjp", {
-    useMongoClient: true
-});
-var db = mongoose.connection;
+// mongoose.connect("mongodb://heroku_bc0tfcjp:cr58svd7egj7qgk7310e0hk87l@ds249737.mlab.com:49737/heroku_bc0tfcjp", {
+//     useMongoClient: true
+// });
 
-db.on("error", function (error) {
-    console.log("Mongoose Error: ", error);
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://localhost/newyorktimes", {
+  useMongoClient: true
 });
 
-db.once("open", function () {
-    console.log("Mongoose connection successful.");
-});
+// var db = mongoose.connection;
+
+// db.on("error", function (error) {
+//     console.log("Mongoose Error: ", error);
+// });
+
+// db.once("open", function () {
+//     console.log("Mongoose connection successful.");
+// });
 
 var PORT = process.env.PORT || 3000;
 

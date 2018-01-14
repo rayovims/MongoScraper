@@ -49,11 +49,48 @@ router.get("/note/:id", function (req, res) {
         .find({ _id: req.params.id })
         .populate("notes.note")
         .then(function (data) {
-            console.log()
-            res.json(data)
+            console.log(data[0].notes)
+            let notes = [];
+            data[0].notes.forEach(element => {
+                //console.log(element._id);
+                notes.push({
+                    body: element.note.body,
+                    id: element.note._id
+                })
+            });
+            res.json(notes)
         })
 })
 
+router.put("/article/delete/:id", function (req, res) {
+    db.Saved
+        .deleteOne({ _id: req.params.id })
+        .then(function (confirm) {
+            res.json("conirm");
+        })
+    //TODO: Delete notes that belong to article
+    // .find({ _id: req.params.id })
+    // .then(function (data) {
+    //     data[0].notes.forEach(note => {
+    //         db.Note.deleteOne({ _id: note._id })
+    //     })
+    // })
+    // .then(function (result) {
+    //     db.Saved
+    //         .deleteOne({ _id: req.params.id });
+    //     res.json("Done");
+    // })
+})
+
+router.put("/note/delete/:id", function (req, res) {
+    console.log(req.params.id)
+    db.Note
+        .deleteOne({_id: req.params.id})
+        .then(function(del){
+            res.json("deleted")
+            console.log("deleted")
+        })
+})
 router.post("/note/create/:id", function (req, res) {
     db.Note
         .create(req.body)
